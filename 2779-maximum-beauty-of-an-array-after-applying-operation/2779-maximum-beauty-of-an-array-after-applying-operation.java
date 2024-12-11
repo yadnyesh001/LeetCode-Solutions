@@ -3,9 +3,16 @@ class Solution {
         Arrays.sort(nums);
         int max = 0;
         for(int i=0; i<nums.length-1; i++){
-            for(int j=i+1; j<nums.length; j++){
-                if(nums[j] - nums[i] <= 2*k){
-                    max = Math.max(max, j-i);
+            int start = i+1;
+            int end = nums.length-1;
+            while(start <= end){
+                int mid = start + (end-start)/2;
+                if(nums[mid] - nums[i] <= 2*k){
+                    max = Math.max(max, mid-i);
+                    start = mid+1;
+                }
+                else{
+                    end = mid-1;
                 }
             }
         }
