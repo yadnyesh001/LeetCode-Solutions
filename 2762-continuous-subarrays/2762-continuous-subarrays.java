@@ -1,18 +1,22 @@
 class Solution {
     public long continuousSubarrays(int[] nums) {
-        PriorityQueue<Integer> max = new PriorityQueue<>((a, b) -> b-a);
-        PriorityQueue<Integer> min = new PriorityQueue<>();
         long count = 0;
         int start = 0;
-        for(int i=0; i<nums.length; i++){
-            max.add(nums[i]);
-            min.add(nums[i]);
-            while(max.peek() - min.peek() > 2){
-                max.remove(nums[start]);
-                min.remove(nums[start]);
+        int min = nums[0];
+        int max = nums[0];
+        for (int end = 0; end < nums.length; end++) {
+            min = Math.min(min, nums[end]);
+            max = Math.max(max, nums[end]);
+            while (max - min > 2) {
                 start++;
+                min = nums[start];
+                max = nums[start];
+                for (int k = start; k <= end; k++) {
+                    min = Math.min(min, nums[k]);
+                    max = Math.max(max, nums[k]);
+                }
             }
-            count = count + i - start + 1;
+            count += (end - start + 1);
         }
         return count;
     }
