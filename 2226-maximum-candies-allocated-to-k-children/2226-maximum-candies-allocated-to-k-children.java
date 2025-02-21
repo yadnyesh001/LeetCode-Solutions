@@ -1,28 +1,28 @@
 class Solution {
     public int maximumCandies(int[] candies, long k) {
-        int min = 1;
-        int max = 0;
-        for(int i=0; i<candies.length; i++){
-            if(max < candies[i]){
-                max = candies[i];
+        int ans=-1;
+        int lo=1, hi=0;
+
+        for(int i=0 ; i<candies.length ; i++){
+            if(candies[i] > hi) hi = candies[i];
+        }
+
+        while(lo <= hi) {
+            int mid = lo + (hi-lo)/2;
+
+            long piles=0;
+            for(int i=0 ; i<candies.length ; i++){
+                piles+=(long)(candies[i]/mid);
+            }
+
+            if(piles >= k) {
+                ans=mid;
+                lo=mid+1;
+            }else{
+                hi=mid-1;
             }
         }
-        long left = 1;
-        long right = max;
-        int result = 0;
-        while (left <= right) {
-            long mid = left + (right - left) / 2;
-            long count = 0;
-            for (int candy : candies) {
-                count += candy / mid;
-            }
-            if (count >= k) {
-                result = (int) mid; 
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return result;
+
+        return ans == -1 ? 0 : ans;
     }
 }
