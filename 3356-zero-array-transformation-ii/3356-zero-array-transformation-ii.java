@@ -1,6 +1,14 @@
 class Solution {
     public int minZeroArray(int[] nums, int[][] queries) {
         int n = nums.length, m = queries.length;
+        boolean alreadyZero = true;
+        for (int num : nums) {
+            if (num != 0) {
+                alreadyZero = false;
+                break;
+            }
+        }
+        if (alreadyZero) return 0;
         int left = 1, right = m, ans = -1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
