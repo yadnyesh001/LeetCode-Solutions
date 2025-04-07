@@ -20,16 +20,16 @@ class Solution {
         if(root == null){
             return list;
         }
-        ans.offer(root);
+        ans.add(root);
         while(!ans.isEmpty()){
-            int size = ans.size();
             List<Integer> sublist = new ArrayList<>();
+            int size = ans.size();
             for(int i=0; i<size; i++){
                 if(ans.peek().left != null){
-                    ans.offer(ans.peek().left);
+                    ans.add(ans.peek().left);
                 }
                 if(ans.peek().right != null){
-                    ans.offer(ans.peek().right);
+                    ans.add(ans.peek().right);
                 }
                 sublist.add(ans.poll().val);
             }
