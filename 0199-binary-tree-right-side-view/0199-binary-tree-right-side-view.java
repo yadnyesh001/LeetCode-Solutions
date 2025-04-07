@@ -28,10 +28,10 @@ class Solution {
                 if (i == size - 1) {
                     list.add(currentNode.val);
                 }
-                if (currentNode.left != null) {
+                if(currentNode.left != null){
                     ans.offer(currentNode.left);
                 }
-                if (currentNode.right != null) {
+                if(currentNode.right != null){
                     ans.offer(currentNode.right);
                 }
             }
