@@ -1,32 +1,19 @@
 class Solution {
     public int minimumOperations(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        
-        List<Integer> list = new ArrayList<>();
-        for (int num : nums) {
-            list.add(num);
-        }
-        
-        int operations = 0;
-        while (list.size() > 0) {
-            if (isDistinct(list)) {
+        Set<Integer> set = new HashSet<>();
+        int i = nums.length-1;
+        int count = 0;
+        while(!set.contains(nums[i])){
+            set.add(nums[i]);
+            count++;
+            i--;
+            if(i < 0){
                 break;
             }
-            
-            int elementsToRemove = Math.min(3, list.size());
-            for (int i = 0; i < elementsToRemove; i++) {
-                list.remove(0);
-            }
-            operations++;
+        }   
+        if((nums.length - count) % 3 != 0){
+            return (nums.length - count)/3 + 1;
         }
-        
-        return operations;
-    }
-    
-    private boolean isDistinct(List<Integer> list) {
-        Set<Integer> set = new HashSet<>(list);
-        return set.size() == list.size();
+        return (nums.length - count)/3;
     }
 }
