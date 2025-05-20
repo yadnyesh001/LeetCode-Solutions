@@ -1,14 +1,20 @@
 class Solution {
     public boolean isZeroArray(int[] nums, int[][] queries) {
-        int max = -1;
-        for(int i=0; i<nums.length; i++){
-            if(max < nums[i]){
-                max = nums[i];
+        int n = nums.length;
+        int[] freq = new int[n];
+        for(int[] q : queries) {
+            freq[q[0]]++;
+            if(q[1] + 1 < n) {
+                freq[q[1] + 1]--;
             }
         }
-        if(max <= queries.length){
-            return true;
+        int curFreq = 0;
+        for(int i = 0; i < n; i++) {
+            curFreq += freq[i];
+            if(curFreq < nums[i]) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 }
