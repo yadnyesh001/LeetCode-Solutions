@@ -1,32 +1,25 @@
 class Solution {
     public int findMaxFish(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int maxFish = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] > 0) {
-                    maxFish = Math.max(maxFish, dfs(grid, i, j));
-                }
+        int max = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                int x = dfs(grid, i, j);
+                max = Math.max(max, x);
             }
         }
-        return maxFish;
+        return max;
     }
 
-    private int dfs(int[][] grid, int r, int c) {
-        int m = grid.length;
-        int n = grid[0].length;
-        if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] == 0) {
+    public int dfs(int[][] grid, int i, int j) {
+        if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || grid[i][j] == 0) {
             return 0;
         }
-        int fishCount = grid[r][c];
-        grid[r][c] = 0;
-        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        for (int[] dir : directions) {
-            int newRow = r + dir[0];
-            int newCol = c + dir[1];
-            fishCount += dfs(grid, newRow, newCol);
-        }
-        return fishCount;
+        int count = grid[i][j];
+        grid[i][j] = 0;
+        count += dfs(grid, i + 1, j);
+        count += dfs(grid, i - 1, j);
+        count += dfs(grid, i, j + 1);
+        count += dfs(grid, i, j - 1);
+        return count;
     }
 }
