@@ -6,8 +6,8 @@ class Solution {
         long ans = 0;
         while (count < n) {
             int right = left * 10;
-            for (int op = 0; op < 2; op++) {
-                for (int i = left; i < right && count < n; i++) {
+            for (int op = 0; op < 2; ++op) {
+                for (int i = left; i < right && count < n; ++i) {
                     long combined = i;
                     int x = (op == 0 ? i / 10 : i);
                     while (x > 0) {
@@ -15,7 +15,7 @@ class Solution {
                         x /= 10;
                     }
                     if (isPalindrome(combined, k)) {
-                        count++;
+                        ++count;
                         ans += combined;
                     }
                 }
@@ -28,12 +28,12 @@ class Solution {
     private boolean isPalindrome(long x, int k) {
         int length = -1;
         while (x > 0) {
-            length++;
+            ++length;
             digit[length] = (int) (x % k);
             x /= k;
         }
-        for (int i = 0, j = length; i < j; i++, j--) {
-            if (digit[i] != digit[j]){
+        for (int i = 0, j = length; i < j; ++i, --j) {
+            if (digit[i] != digit[j]) {
                 return false;
             }
         }
