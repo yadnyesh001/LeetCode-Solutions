@@ -1,15 +1,12 @@
 class Solution {
     public int maxScoreSightseeingPair(int[] values) {
-        int sum = 0;
-        for(int i=0; i<values.length-1; i++){
-            for(int j=i+1; j<values.length; j++){
-                int x = 0;
-                x = values[i] + values[j] + i - j;
-                if(x > sum){
-                    sum = x;
-                }
-            }
+        int maxScore = 0;
+        int maxValuesPlusI = values[0] + 0; 
+        for (int j = 1; j < values.length; j++) {
+            int currentScore = maxValuesPlusI + values[j] - j;
+            maxScore = Math.max(maxScore, currentScore);
+            maxValuesPlusI = Math.max(maxValuesPlusI, values[j] + j);
         }
-        return sum;
+        return maxScore;
     }
 }
