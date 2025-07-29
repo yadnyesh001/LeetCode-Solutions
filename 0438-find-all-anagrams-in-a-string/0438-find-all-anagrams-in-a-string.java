@@ -1,34 +1,31 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        List<Integer> result = new ArrayList<>();
-        if (s == null || p == null || s.length() < p.length()) {
-            return result;
+        List<Integer> list = new ArrayList<>();
+        int sarr[] = new int[26];
+        int parr[] = new int[26];
+        for(char ch : p.toCharArray()){
+            parr[ch - 'a']++;
         }
-
-        int[] pFreq = new int[26];
-        int[] sFreq = new int[26];
-
-        for (char c : p.toCharArray()) {
-            pFreq[c - 'a']++;
+        for(int i=0; i<p.length(); i++){
+            sarr[s.charAt(i) - 'a']++;
         }
-
-        int pLength = p.length();
-
-        for (int i = 0; i < s.length(); i++) {
-            sFreq[s.charAt(i) - 'a']++;
-            if (i >= pLength) {
-                sFreq[s.charAt(i - pLength) - 'a']--;
-            }
-            if (areEqual(pFreq, sFreq)) {
-                result.add(i - pLength + 1);
+        if(areEqual(sarr, parr)){
+            list.add(0);
+        }
+        int j = 0;
+        for(int i=p.length(); i<s.length(); i++){
+            sarr[s.charAt(i) - 'a']++;
+            sarr[s.charAt(j++) - 'a']--;
+            if(areEqual(sarr, parr)){
+                list.add(j);
             }
         }
-        return result;
+        return list;
     }
 
-    private boolean areEqual(int[] a, int[] b) {
-        for (int i = 0; i < 26; i++) {
-            if (a[i] != b[i]) {
+    public boolean areEqual(int sarr[], int parr[]){
+        for(int i=0; i<26; i++){
+            if(sarr[i] != parr[i]){
                 return false;
             }
         }
