@@ -1,42 +1,31 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
-        if (s1.length() > s2.length()) {
+        if(s2.length() < s1.length()){
             return false;
         }
-
-        int[] s1freq = new int[26];
-        int[] s2freq = new int[26];
-
-        for (char c : s1.toCharArray()) {
-            s1freq[c - 'a']++;
+        int s1arr[] = new int[26];
+        int s2arr[] = new int[26];
+        for(int i=0; i<s1.length(); i++){
+            s1arr[s1.charAt(i) - 'a']++;
+            s2arr[s2.charAt(i) - 'a']++;
         }
-
-        int s1Length = s1.length();
-
-        for (int i = 0; i < s1Length; i++) {
-            s2freq[s2.charAt(i) - 'a']++;
-        }
-
-        if (areEqual(s1freq, s2freq)) {
+        if(areEqual(s1arr, s2arr)){
             return true;
         }
-
-        for (int i = s1Length; i < s2.length(); i++) {
-            s2freq[s2.charAt(i) - 'a']++;
-
-            s2freq[s2.charAt(i - s1Length) - 'a']--;
-
-            if (areEqual(s1freq, s2freq)) {
+        int j = 0;
+        for(int i=s1.length(); i<s2.length(); i++){
+            s2arr[s2.charAt(i) - 'a']++;
+            s2arr[s2.charAt(j++) - 'a']--;
+            if(areEqual(s1arr, s2arr)){
                 return true;
             }
         }
-
         return false;
     }
-    
-    private boolean areEqual(int[] a, int[] b) {
-        for (int i = 0; i < 26; i++) {
-            if (a[i] != b[i]) {
+
+    public boolean areEqual(int sarr[], int parr[]){
+        for(int i=0; i<26; i++){
+            if(sarr[i] != parr[i]){
                 return false;
             }
         }
