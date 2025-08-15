@@ -1,22 +1,14 @@
 class Solution {
-    public int[] merge(int[] nums1, int m, int[] nums2, int n) {
-        if(nums1.length >= nums2.length){
-            int j = 0;
-            for(int i=m; i<m+n; i++){
-                nums1[i] = nums2[j];
-                j++;
-            }
-            Arrays.sort(nums1);
-            return nums1;
-        }
-        else{
-            int j = 0;
-            for(int i=n; i<m+n; i++){
-                nums2[i] = nums1[j];
-                j++;
-            }
-            Arrays.sort(nums2);
-            return nums2;
-        }
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int i=0; i<m; i++){
+            pq.add(nums1[i]);
+        }     
+        for(int i=0; i<n; i++){
+            pq.add(nums2[i]);
+        }                    
+        for(int i=0; i<nums1.length; i++){
+            nums1[i] = pq.poll();
+        }   
     }
-}
+}                      
