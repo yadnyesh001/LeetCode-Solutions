@@ -21,11 +21,10 @@ class Solution {
             tempo = tempo.next;
             tempe.next = temp;
             if(temp == null){
-                break
-                ;
+                break;
             }
             temp = temp.next;
-            tempe = tempe.next; 
+            tempe = tempe.next;
         }
         odd = odd.next;
         even = even.next;
