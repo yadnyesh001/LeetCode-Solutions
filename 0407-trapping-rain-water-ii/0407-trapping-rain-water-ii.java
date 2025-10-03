@@ -1,67 +1,46 @@
-public class Solution {
-    private static class Cell {
-        int row;
-        int col;
-        int height;
-        
-        Cell(int row, int col, int height) {
-            this.row = row;
-            this.col = col;
-            this.height = height;
+class Solution {
+    class Node implements Comparable<Node>{
+        int x, y, h;
+        Node(int x, int y, int h){
+            this.x = x;
+            this.y = y;
+            this.h = h;
+        }
+        public int compareTo(Node that){
+            return this.h - that.h;
         }
     }
-    
     public int trapRainWater(int[][] heightMap) {
-        if (heightMap == null || heightMap.length <= 2 || heightMap[0].length <= 2) {
-            return 0;
-        }
-        
-        int m = heightMap.length;
-        int n = heightMap[0].length;
-        
-        PriorityQueue<Cell> minHeap = new PriorityQueue<>((a, b) -> a.height - b.height);
-        
-        boolean[][] visited = new boolean[m][n];
-        
-        for (int j = 0; j < n; j++) {
-            minHeap.offer(new Cell(0, j, heightMap[0][j]));
-            minHeap.offer(new Cell(m-1, j, heightMap[m-1][j]));
-            visited[0][j] = true;
-            visited[m-1][j] = true;
-        }
-        
-        for (int i = 1; i < m-1; i++) {
-            minHeap.offer(new Cell(i, 0, heightMap[i][0]));
-            minHeap.offer(new Cell(i, n-1, heightMap[i][n-1]));
+        int n = heightMap.length, m = heightMap[0].length;
+        boolean[][] visited = new boolean[n][m];
+        Queue<Node> heap = new PriorityQueue<>();
+        for(int i = 0; i < n; i++){
             visited[i][0] = true;
-            visited[i][n-1] = true;
+            visited[i][m - 1] = true;
+            heap.add(new Node(i, 0, heightMap[i][0]));
+            heap.add(new Node(i, m - 1, heightMap[i][m - 1]));
         }
-        
-        int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        
-        int water = 0;
-        int maxBoundaryHeight = Integer.MIN_VALUE;
-        
-        while (!minHeap.isEmpty()) {
-            Cell current = minHeap.poll();
-            maxBoundaryHeight = Math.max(maxBoundaryHeight, current.height);
-            
-            for (int[] dir : dirs) {
-                int newRow = current.row + dir[0];
-                int newCol = current.col + dir[1];
-                
-                if (newRow < 0 || newRow >= m || newCol < 0 || newCol >= n || visited[newRow][newCol]) {
-                    continue;
+        for(int j = 0; j < m; j++){
+            visited[0][j] = true;
+            visited[n - 1][j] = true;
+            heap.add(new Node(0, j, heightMap[0][j]));
+            heap.add(new Node(n - 1, j, heightMap[n - 1][j]));
+        }
+        int ans = 0;
+        int[] dx = {0, 0, 1, -1};
+        int[] dy = {1, -1, 0, 0};
+        while(!heap.isEmpty()){
+            Node cur = heap.poll();
+            for(int k = 0; k < 4; k++){
+                int x = cur.x + dx[k];
+                int y = cur.y + dy[k];
+                if(x >= 0 && y >= 0 && x < n && y < m && !visited[x][y]){
+                    visited[x][y] = true;
+                    ans += Math.max(0, cur.h - heightMap[x][y]);
+                    heap.add(new Node(x, y, Math.max(cur.h, heightMap[x][y])));
                 }
-                
-                visited[newRow][newCol] = true;
-                if (heightMap[newRow][newCol] < maxBoundaryHeight) {
-                    water += maxBoundaryHeight - heightMap[newRow][newCol];
-                }
-                minHeap.offer(new Cell(newRow, newCol, heightMap[newRow][newCol]));
             }
         }
-        
-        return water;
+        return ans;
     }
 }
