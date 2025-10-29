@@ -1,11 +1,12 @@
 class Solution {
     public int smallestNumber(int n) {
-        int ans = 0;
-        int i = 0;
-        while(ans < n){
-            ans = (int)Math.pow(2,i)-1;
-            i++;
+        if(n == 1){
+            return 1;
         }
-        return ans;
+        int x = 0;
+        while((int)Math.pow(2,x) <= n){
+            x++;
+        }
+        return (int)Math.pow(2,x)-1;
     }
 }
