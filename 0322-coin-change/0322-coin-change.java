@@ -1,20 +1,13 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
-        Arrays.sort(coins);
-        int i = coins.length-1;
-        int count = 0;
-        while(amount > 0 && i >= 0){
-            if(amount - coins[i] >= 0){
-                count++;
-                amount = amount - coins[i];
-            }
-            else{
-                i--;
+        int dp[] = new int[amount + 1];
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;  
+        for (int coin : coins) {
+            for (int j = coin; j <= amount; j++) {
+                dp[j] = Math.min(dp[j], dp[j - coin] + 1);
             }
         }
-        if(amount > 0){
-            return -1;
-        }
-        return count;
+        return dp[amount] > amount ? -1 : dp[amount];
     }
 }
