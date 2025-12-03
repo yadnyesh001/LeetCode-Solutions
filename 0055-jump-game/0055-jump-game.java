@@ -1,25 +1,16 @@
 class Solution {
     public boolean canJump(int[] nums) {
-        if(nums.length == 1){
-            return true;
-        }
-        if(nums[0] == 0){
-            return false;
-        }
-        int allow = 0;
-        int sum = nums.length - 1;
-        for (int i = 0; i < nums.length-1; i++) {
-            if(nums[i] == 0 && i >= allow){
+        int n = nums.length;
+        int max = 0;
+        for(int i=0; i<n; i++){
+            if(i > max){
                 return false;
             }
-            if (sum <= nums[i]) {
+            max = Math.max(max, i + nums[i]);
+            if(max >= n-1){
                 return true;
-            } else {
-                sum = sum - 1;
-                int abc = i + nums[i];
-                allow = Math.max(allow, abc);
             }
         }
-        return false;
+        return true;
     }
 }
