@@ -1,28 +1,27 @@
 class Solution {
     public int bestClosingTime(String customers) {
-        int index = 0;
-        int countn = 0;
-        int county = 0;
+        int sum = 0;
         for(char ch : customers.toCharArray()){
             if(ch == 'Y'){
-                county++;
+                sum++;
             }
         }
-        int sum = 0;
-        int indexsum = county;
-        for(int i=0; i<=customers.length(); i++){
-            if(i > 0 && customers.charAt(i-1) == 'N'){
-                countn++;
+        int min = sum;
+        int idx = 0;
+        int i = 1;
+        for(char ch : customers.toCharArray()){
+            if(ch == 'Y'){
+                sum--;
             }
-            if(i > 0 && customers.charAt(i-1) == 'Y'){
-                county--;
+            else{
+                sum++;
             }
-            sum = county + countn;
-            if(sum < indexsum){
-                indexsum = sum;
-                index = i;
+            if(min > sum){
+                min = sum;
+                idx = i;
             }
+            i++;
         }
-        return index;
+        return idx;
     }
 }
