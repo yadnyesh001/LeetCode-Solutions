@@ -1,24 +1,28 @@
 class Solution {
     public int[] pivotArray(int[] nums, int pivot) {
-        int arr[] = new int[nums.length];
-        int j=0;
-        for(int i=0; i<nums.length; i++){
-            if(nums[i] < pivot){
-                arr[j] = nums[i];
-                j++;
-            }
-        }
+        List<Integer> list = new ArrayList<>();
+        Stack<Integer> st = new Stack<>();
+        int count = 0;
         for(int i=0; i<nums.length; i++){
             if(nums[i] == pivot){
-                arr[j] = nums[i];
-                j++;
+                count++;
+            }
+            else if(nums[i] < pivot){
+                st.push(nums[i]);
+            }
+            else{
+                list.add(nums[i]);
             }
         }
+        for(int i=0; i<count; i++){
+            list.add(0, pivot);
+        }
+        while(!st.isEmpty()){
+            list.add(0, st.pop());
+        }
+        int arr[] = new int[nums.length];
         for(int i=0; i<nums.length; i++){
-            if(nums[i] > pivot){
-                arr[j] = nums[i];
-                j++;
-            }
+            arr[i] = list.get(i);
         }
         return arr;
     }
