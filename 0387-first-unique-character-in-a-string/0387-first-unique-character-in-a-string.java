@@ -1,24 +1,14 @@
 class Solution {
     public int firstUniqChar(String s) {
-        List<Character> list = new ArrayList<>();
-        Set<Character> set = new HashSet<>();
+        int arr[] = new int[26];
         for(char ch : s.toCharArray()){
-            if(set.contains(ch)){
-                list.add(ch);
-            }
-            else{
-                set.add(ch);
+            arr[ch - 'a']++;
+        }
+        for(int i=0; i<s.length(); i++){
+            if(arr[s.charAt(i) - 'a'] == 1){
+                return i;
             }
         }
-        int index = -1;
-        int x = 0;
-        for(char ch : s.toCharArray()){
-            if(!list.contains(ch)){
-                index = x;
-                break;
-            }
-            x++;
-        }
-        return index;
+        return -1;
     }
 }
