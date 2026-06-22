@@ -1,24 +1,19 @@
 class Solution {
     public int rearrangeCharacters(String s, String target) {
-        int[] sCount = new int[26]; 
-        int[] targetCount = new int[26];  
-
-        for (char c : s.toCharArray()) {
-            sCount[c - 'a']++;
+        int arr[] = new int[26];
+        for(char ch : s.toCharArray()){
+            arr[ch - 'a']++;
         }
-
-        for (char c : target.toCharArray()) {
-            targetCount[c - 'a']++;
+        int xyz[] = new int[26];
+        for(char ch : target.toCharArray()){
+            xyz[ch - 'a']++;
         }
-
-        int result = Integer.MAX_VALUE;
-
-        for (int i = 0; i < 26; i++) {
-            if (targetCount[i] > 0) {
-                result = Math.min(result, sCount[i] / targetCount[i]);
+        int min = Integer.MAX_VALUE;
+        for(int i=0; i<26; i++){
+            if(xyz[i] > 0){
+                min = Math.min(min, arr[i]/xyz[i]);
             }
         }
-
-        return result;
+        return min;
     }
 }
