@@ -1,49 +1,21 @@
 class Solution {
     public int trap(int[] height) {
+        int n = height.length;
+        int leftMax[] = new int[n+2];
+        int rightMax[] = new int[n+2];
+        for(int i=0; i<n; i++){
+            leftMax[i+1] = Math.max(leftMax[i], height[i]);
+        }
+        for(int i=n-1; i>=0; i--){
+            rightMax[i+1] = Math.max(rightMax[i+2], height[i]);
+        }
         int sum = 0;
-        int water = 0;
-        int count = 0;
-        int maxindex = 0;
-        int max = height[0];
-
-        for(int i=1; i<height.length; i++){
-            if(max < height[i]){
-                maxindex = i;
-                max = height[i];
-            }
+        for(int i=0; i<n; i++){
+            int curr = Math.min(leftMax[i], rightMax[i+1]) - height[i];
+            if(curr > 0){
+                sum = sum + curr;
+            } 
         }
-        int current = height[0];
-        for(int i=1; i<=maxindex; i++){
-            if(height[i] >= current){
-                water = water + Math.min(height[i], current)*count - sum;
-                System.out.println(water);
-                current = height[i]; 
-                sum = 0;
-                count = 0;
-            }
-            else{
-                sum = sum + height[i];
-                count++;
-            }
-        }
-
-        sum = 0;
-        count = 0;
-        current = height[height.length-1];
-        for(int i=height.length-2; i>=maxindex; i--){
-            if(height[i] >= current){
-                water = water + Math.min(height[i], current)*count - sum;
-                System.out.println(water);
-                current = height[i];
-                sum = 0;
-                count = 0;
-            }
-            else{
-                sum = sum + height[i];
-                count++;
-            }
-        }
-
-        return water;
+        return sum;
     }
 }
