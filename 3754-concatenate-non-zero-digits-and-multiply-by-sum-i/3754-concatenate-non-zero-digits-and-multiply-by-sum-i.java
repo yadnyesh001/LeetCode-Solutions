@@ -1,18 +1,17 @@
 class Solution {
     public long sumAndMultiply(int n) {
         long ans = 0;
-        int x = 0;
-        int a = 0;
+        long sum = 0;
+        int i = 0;
         while(n > 0){
-            int p = n % 10;
-            x = x + p;
-            if(p > 0){
-                ans += p * (long)Math.pow(10,a);
-                a++;
+            int x = n%10;
+            if(x != 0){
+                sum = sum + x;
+                ans = (long)x*((long)Math.pow(10, i)) + ans;
+                i++;
             }
             n = n/10;
         }
-        System.out.println(ans);
-        return ans * (long)x;
+        return ans*sum;
     }
 }
