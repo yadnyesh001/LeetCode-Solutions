@@ -6,11 +6,12 @@ class Solution {
         reverse(nums, 0, k-1);
         reverse(nums, k, n-1);
     }
-    public void reverse(int[] nums, int start, int end){
-        while(start<end) {
-            int temp = nums[start];
+
+    public void reverse(int nums[], int start, int end){
+        while(start < end){
+            int x = nums[start];
             nums[start] = nums[end];
-            nums[end] = temp;
+            nums[end] = x;
             start++;
             end--;
         }
